@@ -4,11 +4,13 @@
   "description": "transfor json ",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "cov": "istanbul cover mocha -u test/**/*"
   },
   "author": "kino",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
   }
 }

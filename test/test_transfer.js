@@ -15,26 +15,35 @@ describe('json transfer', () => {
         expect(fn4).to.throw(TypeError);
     });
     it('should update value for one layer', () => {
-        let json1 = {a: 1, b: 2};
-        jsonTrans(json1, [
+        let json1 = jsonTrans({a: 1, b: 2}, [
             ['a', 11],
             ['b', 22]
         ]);
         expect(json1).to.deep.equal({a: 11, b: 22});
     });
     it('should update value for deep layer', () => {
-        let json2 = {a: {b: {c: 1}}};
-        jsonTrans(json2, [
+        let json2 = jsonTrans({a: {b: {c: 1}}}, [
             ['a.b.c', 11]
         ]);
         expect(json2).to.deep.equal({a: {b: {c: 11}}});
     });
+
     it('should update value for *', () => {
-        let json = {a: true, data: [{a: 1, b: 2}, {a: 1, b: 2}, {a: 1, b: 2}]};
-        jsonTrans(json, [
+        let json = jsonTrans({a: true, data: [{a: 1, b: 2}, {a: 1, b: 2}, {a: 1, b: 2}]}, [
             ['data.*.a', 11]
         ]);
         expect(json).to.deep.equal({a: true, data: [{a: 11, b: 2}, {a: 11, b: 2}, {a: 11, b: 2}]});
+        let json2 = jsonTrans({a: true, data: [{a: {c: 1}, b: 2}, {a: {c: 1}, b: 2}, {a: {c: 1}, b: 2}]}, [
+            ['data.*.a.c', 11]
+        ]);
+        expect(json2).to.deep.equal({a: true, data: [{a: {c: 11}, b: 2}, {a: {c: 11}, b: 2}, {a: {c: 11}, b: 2}]});
+    });
+
+    it('should update value for *', () => {
+        let json = jsonTrans({a: true, data: {c: {a: 1, b: 2}, d: {a: 1, b: 2}, e: {a: 1, b: 2}}}, [
+            ['data.*.a', 11]
+        ]);
+        expect(json).to.deep.equal({a: true, data: {c: {a: 11, b: 2}, d: {a: 11, b: 2}, e: {a: 11, b: 2}}});
     });
 
 

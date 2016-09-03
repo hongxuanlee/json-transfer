@@ -26,11 +26,11 @@ let setValue = (json, path, value) => {
             all.forEach((item) => {
                 let newKeys = keys.slice(idx + 1);
                 newKeys.unshift(item);
-                let curPath = newKeys.join('.');
-                setValue(cur, curPath, value);
+                setValue(cur, newKeys.join('.'), value);
             });
             return json;
-        } else if (cur[key]) {
+        }
+        if (cur[key]) {
             cur = cur[key];
         }
     }
@@ -52,11 +52,12 @@ let run = (json, rules = []) => {
     if (!isObject(json)) {
         throw new TypeError(`${json} is not json`);
     }
+    let newJson = Object.assign({}, json);
     if (!isArray(rules)) {
         throw new TypeError(`${rules} is not array`);
     }
-    rules.forEach(pairs => transfer(json, pairs));
-    return json;
+    rules.forEach(pairs => transfer(newJson, pairs));
+    return newJson;
 };
 
 module.exports = run;
