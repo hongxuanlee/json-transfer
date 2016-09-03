@@ -1,0 +1,14 @@
+{
+  "name": "json-transfer",
+  "version": "0.0.1",
+  "description": "transfor json ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "kino",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
