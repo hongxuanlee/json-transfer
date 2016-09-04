@@ -63,10 +63,15 @@ let transfer = (json, pairs) => {
         throw new TypeError(`${path} is not string`);
     }
     if (path === '') {
-        deassignObj(json, value);
-        return;
+        if(isObject(value)){
+           deassignObj(json, value);
+        }else{
+           json = value;
+        }
+        return json;
     }
     setValue(json, path, value);
+    return json;
 };
 
 let run = (json = {}, rules = []) => {
@@ -77,8 +82,11 @@ let run = (json = {}, rules = []) => {
     if (!isArray(rules)) {
         throw new TypeError(`rules: ${rules} is not array`);
     }
-    rules.forEach(pairs => transfer(newJson, pairs));
-    return newJson;
+    let curJson = newJson;
+    rules.forEach((pairs) => {
+      curJson = transfer(curJson, pairs);
+    });
+    return curJson;
 };
 
 module.exports = run;

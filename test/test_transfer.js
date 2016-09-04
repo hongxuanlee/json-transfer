@@ -64,14 +64,23 @@ describe('json transfer', () => {
 
     it('should set value while path is empty', () => {
         let json = jsonTrans({a: 1}, [
+            ['', 10]
+            ]);
+        expect(json).to.deep.equal(10);
+        let fn = () => jsonTrans({a: 1}, [
+            ['', 'abcdef'],
+            ['a.b', '1']
+            ]);
+        expect(fn).to.throw(TypeError);
+        let json2 = jsonTrans({a: 1}, [
             ['', {b: 2}]
             ]);
-        expect(json).to.deep.equal({ b: 2 });
-        let json1 = jsonTrans({a: 1, c: 1}, [
+        expect(json2).to.deep.equal({ b: 2 });
+        let json3 = jsonTrans({a: 1, c: 1}, [
             ['a.', {b: 2}],
             ['c.d.', {e: 4}]
             ]);
-        expect(json1).to.deep.equal({ a: { b: 2 }, c: {d: {e: 4}}});
+        expect(json3).to.deep.equal({ a: { b: 2 }, c: {d: {e: 4}}});
     });
 
     it('should not set obj key to arr', () => {
@@ -79,7 +88,6 @@ describe('json transfer', () => {
             ['b.c', '1'],
             ['b.d', '2']
             ]);
-        expect(fn).to.throw(Error);
-        
+        expect(fn).to.throw(Error); 
     });
 });
