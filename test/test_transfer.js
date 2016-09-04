@@ -74,7 +74,7 @@ describe('json transfer', () => {
         expect(json1).to.deep.equal({ a: { b: 2 }, c: {d: {e: 4}}});
     });
 
-    it('should set value to arr', () => {
+    it('should not set obj key to arr', () => {
         let fn = () => jsonTrans({a: 1, b:[{c: 1},{c: 2}]}, [
             ['b.c', '1'],
             ['b.d', '2']
