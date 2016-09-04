@@ -18,9 +18,6 @@ let setValue = (json, path, value) => {
     let len = keys.length;
     for (let idx = 0; idx < keys.length; idx++) {
         let key = keys[idx];
-        if (idx === len - 1) {
-            cur[key] = value;
-        }
         if (key === '*') {
             let all = Object.keys(cur);
             all.forEach((item) => {
@@ -30,9 +27,14 @@ let setValue = (json, path, value) => {
             });
             return json;
         }
-        if (cur[key]) {
-            cur = cur[key];
+        if (idx === len - 1) {
+            cur[key] = value;
+            return json;
         }
+        if (!cur[key]) {
+            cur[key] = {};
+        }
+        cur = cur[key];
     }
 };
 
@@ -48,7 +50,7 @@ let transfer = (json, pairs) => {
     setValue(json, path, value);
 };
 
-let run = (json, rules = []) => {
+let run = (json = {}, rules = []) => {
     if (!isObject(json)) {
         throw new TypeError(`${json} is not json`);
     }

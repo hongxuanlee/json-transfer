@@ -28,23 +28,37 @@ describe('json transfer', () => {
         expect(json2).to.deep.equal({a: {b: {c: 11}}});
     });
 
-    it('should update value for *', () => {
+    it('should update value for * (array)', () => {
         let json = jsonTrans({a: true, data: [{a: 1, b: 2}, {a: 1, b: 2}, {a: 1, b: 2}]}, [
-            ['data.*.a', 11]
+            ['data.*.a', 11],
+            ['data.*.b', 22]
         ]);
-        expect(json).to.deep.equal({a: true, data: [{a: 11, b: 2}, {a: 11, b: 2}, {a: 11, b: 2}]});
+        expect(json).to.deep.equal({a: true, data: [{a: 11, b: 22}, {a: 11, b: 22}, {a: 11, b: 22}]});
         let json2 = jsonTrans({a: true, data: [{a: {c: 1}, b: 2}, {a: {c: 1}, b: 2}, {a: {c: 1}, b: 2}]}, [
             ['data.*.a.c', 11]
         ]);
         expect(json2).to.deep.equal({a: true, data: [{a: {c: 11}, b: 2}, {a: {c: 11}, b: 2}, {a: {c: 11}, b: 2}]});
     });
 
-    it('should update value for *', () => {
+    it('should update value for * (object)', () => {
         let json = jsonTrans({a: true, data: {c: {a: 1, b: 2}, d: {a: 1, b: 2}, e: {a: 1, b: 2}}}, [
             ['data.*.a', 11]
         ]);
         expect(json).to.deep.equal({a: true, data: {c: {a: 11, b: 2}, d: {a: 11, b: 2}, e: {a: 11, b: 2}}});
     });
 
+    it('should update value for * (last element)', () => {
+        let json = jsonTrans({a: true, data: {c: {a: 1, b: 2}, d: {a: 1, b: 2}, e: {a: 1, b: 2}}}, [
+            ['data.c.*', 11]
+        ]);
+        expect(json).to.deep.equal({a: true, data: {c: {a: 11, b: 11}, d: {a: 1, b: 2}, e: {a: 1, b: 2}}});
+    });
 
+    it('should set value while json is null', () => {
+        let json = jsonTrans(undefined, [
+            ['data.a', '1'],
+            ['data.b', '2']
+            ]);
+        expect(json).to.deep.equal({ data: { a: '1', b: '2' } });
+    });
 });
