@@ -12,8 +12,20 @@ let isArray = arr => Array.isArray(arr);
 
 let isObject = obj => Object.prototype.toString.call(obj) === '[object Object]';
 
+let isObjorArr = val => isArray(val) || isObject(val);
+
+let compact = arr => arr.filter(item => item && item !== '');
+
+let deassignObj = (obj, value) => {
+    let keys = Object.keys(obj);
+    keys.forEach(key => {
+        delete obj[key];
+    });
+    Object.assign(obj, value);
+};
+
 let setValue = (json, path, value) => {
-    let keys = path.split('.');
+    let keys = compact(path.split('.'));
     let cur = json;
     let len = keys.length;
     for (let idx = 0; idx < keys.length; idx++) {
@@ -28,10 +40,13 @@ let setValue = (json, path, value) => {
             return json;
         }
         if (idx === len - 1) {
+            if(isArray(cur) && isNaN(key)){
+                throw new Error(`should not set key ${key} to array:[${cur}]`);
+            }
             cur[key] = value;
             return json;
         }
-        if (!cur[key]) {
+        if (!cur[key] || !isObjorArr(cur[key]) ) {
             cur[key] = {};
         }
         cur = cur[key];
@@ -47,6 +62,10 @@ let transfer = (json, pairs) => {
     if (!isString(path)) {
         throw new TypeError(`${path} is not string`);
     }
+    if (path === '') {
+        deassignObj(json, value);
+        return;
+    }
     setValue(json, path, value);
 };
 
@@ -56,7 +75,7 @@ let run = (json = {}, rules = []) => {
     }
     let newJson = Object.assign({}, json);
     if (!isArray(rules)) {
-        throw new TypeError(`${rules} is not array`);
+        throw new TypeError(`rules: ${rules} is not array`);
     }
     rules.forEach(pairs => transfer(newJson, pairs));
     return newJson;

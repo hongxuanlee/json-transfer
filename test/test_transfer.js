@@ -61,4 +61,25 @@ describe('json transfer', () => {
             ]);
         expect(json).to.deep.equal({ data: { a: '1', b: '2' } });
     });
+
+    it('should set value while path is empty', () => {
+        let json = jsonTrans({a: 1}, [
+            ['', {b: 2}]
+            ]);
+        expect(json).to.deep.equal({ b: 2 });
+        let json1 = jsonTrans({a: 1, c: 1}, [
+            ['a.', {b: 2}],
+            ['c.d.', {e: 4}]
+            ]);
+        expect(json1).to.deep.equal({ a: { b: 2 }, c: {d: {e: 4}}});
+    });
+
+    it('should set value to arr', () => {
+        let fn = () => jsonTrans({a: 1, b:[{c: 1},{c: 2}]}, [
+            ['b.c', '1'],
+            ['b.d', '2']
+            ]);
+        expect(fn).to.throw(Error);
+        
+    });
 });
