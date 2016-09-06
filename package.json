@@ -4,7 +4,7 @@
   "description": "transfor json by json path",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "mocha test/**/*",
     "cov": "istanbul cover mocha -u test/**/*"
   },
   "keywords": [
