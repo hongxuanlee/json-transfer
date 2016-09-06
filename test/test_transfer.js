@@ -14,6 +14,7 @@ describe('json transfer', () => {
         expect(fn3).to.throw(TypeError);
         expect(fn4).to.throw(TypeError);
     });
+
     it('should update value for one layer', () => {
         let json1 = jsonTrans({a: 1, b: 2}, [
             ['a', 11],
@@ -67,6 +68,10 @@ describe('json transfer', () => {
             ['', 10]
             ]);
         expect(json).to.deep.equal(10);
+        let json1 = jsonTrans({a: 1}, [
+            ['.', 10]
+            ]);
+        expect(json1).to.deep.equal(10);
         let fn = () => jsonTrans({a: 1}, [
             ['', 'abcdef'],
             ['a.b', '1']

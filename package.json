@@ -1,11 +1,18 @@
 {
   "name": "json-transfer",
-  "version": "0.0.3",
-  "description": "transfor json ",
+  "version": "0.0.5",
+  "description": "transfor json by json path",
   "main": "index.js",
   "scripts": {
     "test": "npm test",
     "cov": "istanbul cover mocha -u test/**/*"
+  },
+  "keywords": [
+    "json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/hongxuanlee/json-transfer.git"
   },
   "author": "kino",
   "license": "MIT",

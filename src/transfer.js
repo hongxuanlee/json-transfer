@@ -28,6 +28,9 @@ let setValue = (json, path, value) => {
     let keys = compact(path.split('.'));
     let cur = json;
     let len = keys.length;
+    if(!keys.length){
+        json = value;
+    }
     for (let idx = 0; idx < keys.length; idx++) {
         let key = keys[idx];
         if (key === '*') {
@@ -51,6 +54,7 @@ let setValue = (json, path, value) => {
         }
         cur = cur[key];
     }
+    return json;
 };
 
 let transfer = (json, pairs) => {
@@ -62,15 +66,7 @@ let transfer = (json, pairs) => {
     if (!isString(path)) {
         throw new TypeError(`${path} is not string`);
     }
-    if (path === '') {
-        if(isObject(value)){
-           deassignObj(json, value);
-        }else{
-           json = value;
-        }
-        return json;
-    }
-    setValue(json, path, value);
+    json = setValue(json, path, value);
     return json;
 };
 
