@@ -20,14 +20,6 @@ let isObjorArr = val => isArray(val) || isObject(val);
 
 let compact = arr => arr.filter(item => item && item !== '');
 
-let deassignObj = (obj, value) => {
-    let keys = Object.keys(obj);
-    keys.forEach(key => {
-        delete obj[key];
-    });
-    Object.assign(obj, value);
-};
-
 let setValue = (json, path, value) => {
     let keys = compact(path.split('.'));
     let cur = json;
