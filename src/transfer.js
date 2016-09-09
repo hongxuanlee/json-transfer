@@ -1,8 +1,12 @@
 'use strict';
+
 /**
  * rules = [[jsonPath, value]]
+ * 
  * jsonPath: 'a.b.c', 'a.0.k', '', 'a.*.d'
+ * 
  * [['a.c', 0], ['a.b.d', 5]]
+ * 
  * @return {json}
  */
 
