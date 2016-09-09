@@ -1,7 +1,7 @@
 ## json-transfer
 [![npm version](https://badge.fury.io/js/json-transfer.svg)](https://badge.fury.io/js/json-transfer)
 [![Build Status](https://travis-ci.org/hongxuanlee/json-transfer.svg?branch=master)](https://travis-ci.org/hongxuanlee/json-transfer)
-[![Coverage Status](https://coveralls.io/repos/github/hongxuanlee/json-transfer/badge.svg)](https://coveralls.io/github/hongxuanlee/json-transfer)
+[![Coverage Status](https://coveralls.io/repos/github/hongxuanlee/json-transfer/badge.svg?branch=master)](https://coveralls.io/github/hongxuanlee/json-transfer?branch=master)
 
 - use path to update json
 
@@ -43,4 +43,9 @@
 ### test
 ```
    npm test
+```
+
+### coverage
+```
+    istanbul cover _mocha
 ```
